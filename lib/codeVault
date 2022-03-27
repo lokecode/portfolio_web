@@ -1,0 +1,5 @@
+dotPositionsReversed = -0.0112 * dotDragPos * dotDragPos + 2.0 * dotDragPos
+dotPositionsReversed = 0.0121 * dotDragPos * dotDragPos - 2.16 * dotDragPos
+
+flutter build web
+firebase deploy --only hosting
