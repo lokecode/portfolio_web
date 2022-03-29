@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -6,10 +8,17 @@ import 'package:portfolio_web/view/Paint/sifi_dot.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 
-class About extends StatelessWidget {
+class About extends StatefulWidget {
+
+  @override
+  State<About> createState() => _AboutState();
+}
+
+class _AboutState extends State<About> {
   double height = 0;
   double width = 0;
   double size = 0;
+  int time = 0;
   var color = Colors.green;
 
 
@@ -54,12 +63,36 @@ class About extends StatelessWidget {
     );
   }
 
+  increment(){
+    Timer(Duration(milliseconds: 10), () => setState(() {
+      time += 1;
+    }));
+  }
+
+  textAnimation(String text) {
+    String animatedText = '';
+    if (time <= text.characters.length) {
+      animatedText = text.substring(0, time);
+    } else {
+      animatedText = text;
+    }
+
+    return Text(animatedText,
+      style: TextStyle(
+        fontSize: size / 33,
+        color: color,
+        fontFamily: 'Modeseven',
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     calculatorSize();
     double containerWidth = size / 1.4;
+    increment();
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.elliptical(size / 15, size / 18)),
@@ -71,13 +104,27 @@ class About extends StatelessWidget {
           children: [
             Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, size / 15, 0, 0),
-                  child: Container(
-                    height: size / 3,
-                    width:  size / 3,
-                    child: CustomPaint(foregroundPainter: SifiDot()),
-                  ),
+                Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, size / 15, 0, 0),
+                      child: Transform.rotate(
+                        angle: (time / 20),
+                        child: Container(
+                          height: size / 3,
+                          width:  size / 3,
+                          child: CustomPaint(foregroundPainter: SifiDot()),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(size / 20, size / 21.5, 0, 0),
+                      child: Container(
+                        width:  size / 4.3,
+                        child: Image.asset("assets/selfie.png"),
+                      ),
+                    ),
+                  ],
                 ),
                 Row(
                   children: [
@@ -177,17 +224,15 @@ class About extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text("Hi im an talented\napp developer\nfrom copenhagen\ndenmark,im\nextraordinarily\ngood at\n"
-                      "solving very\ncomplex problems\nand i always\nfind a solid\nsolution to them,\n"
-                      "im surprisingly,\nquick at learning,\ni can almost\ncode something\nwhile im learning\n"
-                      "it. i always code\nwith coding\narchitecture like\nMVVM, and of\ncourse i use\ninheritance and\n"
-                      "parent, sub, and\nabstract classes,\nmy coding is also\nvery imperativ",
-                    style: TextStyle(
-                      fontSize: size / 33,
-                      color: color,
-                      fontFamily: 'Modeseven',
+                  Container(
+                    height: height / 2.25,
+                    child: textAnimation("Hi im an talented\napp developer\nfrom copenhagen\ndenmark,im\nextraordinarily\ngood at\n"
+                        "solving very\ncomplex problems\nand i always\nfind a solid\nsolution to them,\n"
+                        "im surprisingly,\nquick at learning,\ni can almost\ncode something\nwhile im learning\n"
+                        "it. i always code\nwith coding\narchitecture like\nMVVM, and of\ncourse i use\ninheritance and\n"
+                        "parent, sub, and\nabstract classes,\nmy coding is also\nvery imperativ",
                     ),
-                  ),
+                  )
                 ],
               ),
             )

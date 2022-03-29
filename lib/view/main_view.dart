@@ -21,6 +21,7 @@ class _MainViewState extends State<MainView> {
             children: [
               InformationCard(),
               ThreeDimensionalObject(),
+             // MainAnimation()
             ],
           )
       ),

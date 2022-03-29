@@ -106,7 +106,7 @@ class _createSkillState extends State<createSkill> {
   double size = 0;
 
   int percentLoadedCounter = 0;
-  int animationDuration = 1700;
+  int animationDuration = 2500;
   bool timerState = true;
 
 

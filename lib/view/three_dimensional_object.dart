@@ -90,7 +90,7 @@ class ThreeDimensionalObjectState extends State<ThreeDimensionalObject> {
                   children: [
                     RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 30, -230, false,'PROJECTS', Projects(), 28]),
                     RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 230, 0, false,'SKILLS', Skills(), 23]),
-                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 130, 270, false,'ABOUT', About(), 20.5]),
+                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 130, 270, false,'ABOUT ME', About(), 27.8]),
                     AnimatedContainer(
                       duration: const Duration(microseconds: 0),
                       alignment: const Alignment(0, 0),
@@ -98,7 +98,7 @@ class ThreeDimensionalObjectState extends State<ThreeDimensionalObject> {
                     ),
                     RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 30, -230, true,'PROJECTS', Projects(), 28]),
                     RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 230, 0, true,'SKILLS', Skills(), 23]),
-                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 130, 270, true,'ABOUT', About(), 20.5]),
+                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 130, 270, true,'ABOUT ME', About(), 27.8]),
                   ],
                 ),
               ),

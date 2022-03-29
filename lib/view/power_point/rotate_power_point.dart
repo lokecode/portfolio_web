@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:portfolio_web/view/Paint/line_to_point.dart';
@@ -73,10 +71,10 @@ class RotatePowerPoint extends StatelessWidget {
     if (dotDragPos >= 180) {
       dotSize = dotDragPos / dotSizeDivider;
       dotSize = canvasHeight / dotSize;
-      rotate = dotDragPos / 14.2;
+      rotate = dotDragPos / 14.3;
 
       pointVisibility = false;
-      animatedPointMovement = 1240 - dotDragPos * 6.1 - ((950 - height) / 10);
+      animatedPointMovement = 1300 - dotDragPos * 6.3 - (containerWidth - containerWidth / 3);
 
       pointLabelAlignment = MainAxisAlignment.end;
       pointRightPos = null;
@@ -87,7 +85,7 @@ class RotatePowerPoint extends StatelessWidget {
       dotSize = canvasHeight / dotSize;
       rotate = 20 - dotDragPos / 16;
 
-      animatedPointMovement = (dotDragPos + 10) * 3.3 - ((950 - height) / 10);
+      animatedPointMovement = (dotDragPos + 10) * 3.4 - (containerWidth - containerWidth / 3) ;
       pointVisibility = false;
 
       pointLabelAlignment = MainAxisAlignment.start;
@@ -162,109 +160,120 @@ class RotatePowerPoint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     rotatingSifiDow();
-    return Visibility(
-        visible: widgetVisibility,
-        child: Stack(
-          children: [
-            AnimatedContainer(
-                duration: const Duration(microseconds: 0),
-                alignment: Alignment(dotPosistion / width2 * size / (screenChange / 2) , dotYPos / 360),
-                child: Stack(
-                  children: [
-                    Container(
-                      height: dotSize * 9.2,
-                      width: dotSize * containerWidth,
-                      child: Stack(
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Center(
-                                child: Transform.rotate(
-                                  angle: dragPosistion / 10,
-                                  child: SizedBox(
-                                      height: dotSize * 4,
-                                      width: dotSize * 4,
-                                      child: CustomPaint(foregroundPainter: SifiDot())
-                                  ),
+    return Stack(
+      children: [
+        AnimatedContainer(
+            duration: const Duration(microseconds: 0),
+            alignment: Alignment(dotPosistion / width2 * size / (screenChange / 2) , dotYPos / 360),
+            child: Stack(
+              children: [
+                Container(
+                  height: dotSize * 9.2,
+                  width: dotSize * containerWidth,
+                  child: Stack(
+                    children: [
+                      Visibility(
+                        visible: widgetVisibility,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Center(
+                              child: Transform.rotate(
+                                angle: dragPosistion / 10,
+                                child: SizedBox(
+                                    height: dotSize * 4,
+                                    width: dotSize * 4,
+                                    child: CustomPaint(foregroundPainter: SifiDot())
                                 ),
                               ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: widgetVisibility,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Center(
+                                child: Transform.rotate(
+                                  angle: rotate,
+                                  child: SizedBox(
+                                    height: dotSize * 4,
+                                    width: dotSize * 4,
+                                    child: CustomPaint(foregroundPainter: LineToPoint()),
+                                  ),
+                                )
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Visibility(
+                          visible: pointVisibility,
+                          child: Stack(
                             children: [
-                              Center(
-                                  child: Transform.rotate(
-                                    angle: rotate,
-                                    child: SizedBox(
-                                      height: dotSize * 4,
-                                      width: dotSize * 4,
-                                      child: CustomPaint(foregroundPainter: LineToPoint()),
-                                    ),
-                                  )
-                              )
-                            ],
-                          ),
-                          Visibility(
-                            visible: pointVisibility,
-                            child: Stack(
-                              children: [
-                                Row(
+                              Visibility(
+                                visible: widgetVisibility,
+                                child: Row(
                                   mainAxisAlignment: pointLabelAlignment,
                                   children: [
                                     pointText("$pointLabel"),
                                   ],
                                 ),
-                                Row(
-                                  mainAxisAlignment: pointLabelAlignment,
-                                  children: [
-                                    Container(
-                                      width: dotSize * 10,
-                                      height: dotSize * 2.5,
-                                      child: FlatButton(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: () {
-                                          _showDialog(context);
-                                        },
-                                        child: Text("    "),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          ),
-                          Visibility(
-                            visible: animatedPointVisibility,
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  right: animatedPointMovement,
-                                  child: pointText("$pointLabel"),
-                                ),
-                                Positioned(
-                                  right: animatedPointMovement,
-                                  child: FlatButton(
-                                      padding: EdgeInsets.all(0),
-                                      color: Colors.transparent,
+                              ),
+                              Row(
+                                mainAxisAlignment: pointLabelAlignment,
+                                children: [
+                                  Container(
+                                    width: dotSize * 10,
+                                    height: dotSize * 2.5,
+                                    child: FlatButton(
+                                      padding: EdgeInsets.zero,
                                       onPressed: () {
                                         _showDialog(context);
                                       },
-                                      child: Text("   ")
+                                      child: Text("    "),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                                ],
+                              ),
+                            ],
+                          )
+                        ),
                       ),
-                    ),
-                  ],
-                )
-            ),
-          ],
-        )
+                      Visibility(
+                        visible: widgetVisibility,
+                        child: Visibility(
+                          visible: animatedPointVisibility,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                right: animatedPointMovement,
+                                child: pointText("$pointLabel"),
+                              ),
+                              Positioned(
+                                right: animatedPointMovement,
+                                child: FlatButton(
+                                    padding: EdgeInsets.all(0),
+                                    color: Colors.transparent,
+                                    onPressed: () {
+                                      _showDialog(context);
+                                    },
+                                    child: Text("   ")
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
+        ),
+      ],
     );
   }
 }
