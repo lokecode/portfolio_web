@@ -3,29 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 
-
-
 class Skills extends StatelessWidget {
   double height = 0;
   double width = 0;
   double size = 0;
+  Skills({required this.height, required this.width, required this.size});
+
   double progresBar = 0;
   int animationDuration = 500;
   var color = Colors.green;
 
-  calculatorSize() {
-    if(width >= height) {
-      size = height;
-    } else {
-      size = width;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    calculatorSize();
     double containerWidth = size / 1.6;
     double padding = size / 237;
     return Container(
@@ -59,15 +48,15 @@ class Skills extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(padding, padding * 5, padding, padding * 5),
               child: Column(
                 children: [
-                  createSkill(skill: "Flutter", percentLoaded: 100,),
-                  createSkill(skill: "Kotlin", percentLoaded: 100,),
-                  createSkill(skill: "Javascript", percentLoaded: 40,),
-                  createSkill(skill: "Python", percentLoaded: 70,),
-                  createSkill(skill: "Firebase", percentLoaded: 100,),
-                  createSkill(skill: "Api", percentLoaded: 90,),
-                  createSkill(skill: "MVVM", percentLoaded: 80,),
-                  createSkill(skill: "RX", percentLoaded: 60,),
-                  createSkill(skill: "Webview", percentLoaded: 90,),
+                  createSkill(skill: "Flutter", percentLoaded: 100, height: height, width: width, size: size,),
+                  createSkill(skill: "Kotlin", percentLoaded: 100, height: height, width: width, size: size,),
+                  createSkill(skill: "Javascript", percentLoaded: 40, height: height, width: width, size: size,),
+                  createSkill(skill: "Python", percentLoaded: 70, height: height, width: width, size: size,),
+                  createSkill(skill: "Firebase", percentLoaded: 100, height: height, width: width, size: size,),
+                  createSkill(skill: "Api", percentLoaded: 90, height: height, width: width, size: size,),
+                  createSkill(skill: "MVVM", percentLoaded: 80, height: height, width: width, size: size,),
+                  createSkill(skill: "RX", percentLoaded: 60, height: height, width: width, size: size,),
+                  createSkill(skill: "Webview", percentLoaded: 90, height: height, width: width, size: size,),
                 ],
               ),
             )
@@ -84,7 +73,10 @@ class createSkill extends StatefulWidget {
 
   final double percentLoaded;
   final String skill;
-  createSkill({required this.percentLoaded, required this.skill,});
+  double height = 0;
+  double width = 0;
+  double size = 0;
+  createSkill({required this.percentLoaded, required this.skill, required this.height, required this.width, required this.size});
 
   @override
   _createSkillState createState() => _createSkillState(percentLoaded, skill,);
@@ -108,15 +100,6 @@ class _createSkillState extends State<createSkill> {
   int percentLoadedCounter = 0;
   int animationDuration = 2500;
   bool timerState = true;
-
-
-  calculatorSize() {
-    if(width >= height) {
-      size = height;
-    } else {
-      size = width;
-    }
-  }
 
   text(int textSize, String text) {
     return Text(text,
@@ -154,12 +137,11 @@ class _createSkillState extends State<createSkill> {
 
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    calculatorSize();
+    height = widget.height;
+    width = widget.width;
+    size = widget.size;
 
     animationTiming();
-
     return Padding(
       padding: EdgeInsets.fromLTRB(0, skillPadding, skillPadding, skillPadding),
       child: Row(

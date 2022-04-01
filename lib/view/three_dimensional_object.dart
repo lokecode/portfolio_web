@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:portfolio_web/view/power_point/power_point_content/about.dart';
@@ -9,18 +11,21 @@ import 'package:portfolio_web/view/power_point/rotate_power_point.dart';
 
 
 class ThreeDimensionalObject extends StatefulWidget {
-
+  double height = 0;
+  double width = 0;
+  double size = 0;
+  ThreeDimensionalObject({required this.height, required this.width, required this.size});
 
   @override
   ThreeDimensionalObjectState createState() => ThreeDimensionalObjectState();
 }
 
 class ThreeDimensionalObjectState extends State<ThreeDimensionalObject> {
-
-  double dragPosistion = 0;
-  double height = 1000;
-  double width = 1000;
+  double height = 900;
+  double width = 900;
   double size = 0;
+
+  double dragPosistion = 360;
   double widgetWidth = 0;
   double screenChange = 0;
   List manPictures = [
@@ -37,6 +42,7 @@ class ThreeDimensionalObjectState extends State<ThreeDimensionalObject> {
   var rowAliment = MainAxisAlignment.end;
   var columnAliment = MainAxisAlignment.center;
   int animationDuration = 0;
+  bool runIncrement = true;
 
 
   imageChose() {
@@ -46,12 +52,10 @@ class ThreeDimensionalObjectState extends State<ThreeDimensionalObject> {
 
   calculatorSize() {
     if(width >= height) {
-      size = height;
       widgetWidth = width - size / 2.4;
       screenChange = 500;
       columnAliment = MainAxisAlignment.center;
     } else {
-      size = width;
       widgetWidth = width;
       screenChange = width;
       columnAliment = MainAxisAlignment.start;
@@ -64,14 +68,27 @@ class ThreeDimensionalObjectState extends State<ThreeDimensionalObject> {
     }
   }
 
+  increment() {
+    Timer(Duration(milliseconds: 1), () => setState(() {
+      dragPosistion -= 4;
+      if(dragPosistion <= 2) {
+        dragPosistion = 0;
+        runIncrement = false;
+      }
+    }));
+  }
 
 
   @override
   Widget build(BuildContext context) {
-    imageChose();
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
+    height = widget.height;
+    width = widget.width;
+    size = widget.size;
     calculatorSize();
+    imageChose();
+    if (runIncrement) {
+      increment();
+    }
     return  Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -88,17 +105,17 @@ class ThreeDimensionalObjectState extends State<ThreeDimensionalObject> {
                 }),
                 child: Stack(
                   children: [
-                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 30, -230, false,'PROJECTS', Projects(), 28]),
-                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 230, 0, false,'SKILLS', Skills(), 23]),
-                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 130, 270, false,'ABOUT ME', About(), 27.8]),
+                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 30, -230, false,'PROJECTS', Projects(height: widget.height, width: widget.width, size: widget.size,), 28]),
+                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 230, 0, false,'SKILLS', Skills(height: height, width: width, size: size,), 23]),
+                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 130, 270, false,'ABOUT ME', About(height: height, width: width, size: size,), 27.8]),
                     AnimatedContainer(
                       duration: const Duration(microseconds: 0),
                       alignment: const Alignment(0, 0),
                       child: threeDimensionalObject,
                     ),
-                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 30, -230, true,'PROJECTS', Projects(), 28]),
-                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 230, 0, true,'SKILLS', Skills(), 23]),
-                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 130, 270, true,'ABOUT ME', About(), 27.8]),
+                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 30, -230, true,'PROJECTS', Projects(height: height, width: width, size: size,), 28]),
+                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 230, 0, true,'SKILLS', Skills(height: height, width: width, size: size,), 23]),
+                    RotatePowerPoint(ListOfData: [dragPosistion, height, width, size, screenChange, 130, 270, true,'ABOUT ME', About(height: height, width: width, size: size,), 27.8]),
                   ],
                 ),
               ),

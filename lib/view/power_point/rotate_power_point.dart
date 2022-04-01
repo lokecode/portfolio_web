@@ -35,7 +35,10 @@ class RotatePowerPoint extends StatelessWidget {
 
   pointText(String pointLabel){
     return Container(
-        decoration: BoxDecoration(border: Border.all(color: Colors.green , width: size / 700)),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.green, width: size / 700),
+            color: Colors.black
+        ),
         child: Text(pointLabel, style: TextStyle(color: Colors.green, fontSize:  dotSize * 2, fontFamily: 'Modeseven', backgroundColor: Colors.black54),)
     );
   }
@@ -71,7 +74,7 @@ class RotatePowerPoint extends StatelessWidget {
     if (dotDragPos >= 180) {
       dotSize = dotDragPos / dotSizeDivider;
       dotSize = canvasHeight / dotSize;
-      rotate = dotDragPos / 14.3;
+      rotate = dotDragPos / 14.15;
 
       pointVisibility = false;
       animatedPointMovement = 1300 - dotDragPos * 6.3 - (containerWidth - containerWidth / 3);
@@ -95,11 +98,11 @@ class RotatePowerPoint extends StatelessWidget {
 
 
     if (dotDragPos >= 200){
-      rotate = 13.95;
+      rotate = 14.05;
       pointVisibility = true;
     }
     if (dotDragPos >= 20 && dotDragPos <= 179){
-      rotate = 0;
+      rotate = 0.15;
       pointVisibility = true;
     }
 
@@ -200,7 +203,7 @@ class RotatePowerPoint extends StatelessWidget {
                                   angle: rotate,
                                   child: SizedBox(
                                     height: dotSize * 4,
-                                    width: dotSize * 4,
+                                    width: dotSize * 6.5,
                                     child: CustomPaint(foregroundPainter: LineToPoint()),
                                   ),
                                 )

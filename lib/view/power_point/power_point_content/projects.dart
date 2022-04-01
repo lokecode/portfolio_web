@@ -4,14 +4,88 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:portfolio_web/view/loading_animation/portfolio_animation.dart';
 
-
 class Projects extends StatefulWidget {
+  double height = 0;
+  double width = 0;
+  double size = 0;
+  Projects({required this.height, required this.width, required this.size});
 
   @override
   State<Projects> createState() => _ProjectsState();
 }
 
 class _ProjectsState extends State<Projects> {
+  var time = 0.0;
+  var opacity = Colors.black;
+  bool Animation = true;
+  double widgetWidth = 0;
+
+
+  startAnimation(){
+    Timer(Duration(milliseconds: 10), () => setState(() {
+      opacity = Colors.transparent;
+    }));
+  }
+
+  endAnimation(){
+    Timer(Duration(milliseconds: 500), () => setState(() {
+      Animation = false;
+      widgetWidth = widget.size / 1.57;
+    }));
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    if(Animation) {
+      widgetWidth = widget.width;
+      startAnimation();
+      endAnimation();
+    }
+    return Stack(
+      children: [
+        Stack(
+          children: [
+            Container(
+              width: widgetWidth,
+              child: Center(
+                child: _SubClass(height: widget.height, width: widget.width, size: widget.size,),
+              ),
+            ),
+            Visibility(
+              visible: Animation,
+              child: Center(
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 500),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.elliptical(widget.size / 15, widget.size / 18)),
+                    color: opacity,
+                  ),
+                  width: widget.size / 1.2,
+                  height: widget.height,
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+
+class _SubClass extends StatefulWidget {
+  double height = 0;
+  double width = 0;
+  double size = 0;
+  _SubClass({required this.height, required this.width, required this.size});
+
+  @override
+  State<_SubClass> createState() => _SubClassState();
+}
+
+class _SubClassState extends State<_SubClass> {
   double height = 0;
   double width = 0;
   double size = 0;
@@ -22,15 +96,6 @@ class _ProjectsState extends State<Projects> {
   int animationDuration = 500;
   var color = Colors.green;
   bool posistionAtWidget = true;
-
-  calculatorSize() {
-
-    if(width >= height) {
-      size = height;
-    } else {
-      size = width;
-    }
-  }
 
   timer() {
     Timer(const Duration(milliseconds: 20), () => setState(() {
@@ -204,10 +269,11 @@ class _ProjectsState extends State<Projects> {
 
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    calculatorSize();
+    height = widget.height;
+    width = widget.width;
+    size = widget.size;
     padding = size / 237;
+
     timer();
     if(posistionAtWidget) {
       autoPosistionWidget();
@@ -264,8 +330,8 @@ class _ProjectsState extends State<Projects> {
                         child: instagramClone(
                           "Instagram Clone",
                           "The clone\nwas made to\nshow of my\nskills in\nkotlin.\nThe clone\nuses\nFirebase as\na database,"
-                              "\nand MVVM as\ncoding\narchitecture\nin the clone\nyou can\nupload fotos\nmake post"
-                              "\nand you\ncan login\nand signup\nyou can also\nsee other\nusers post",
+                              "\nand MVVM as\ncoding\narchitecture\nin the clone\nyou can,\nupload fotos,\nmake post,"
+                              "\nand you\ncan login,\nsignup,\nand you can\nalso see\nother users post",
                         ),
                       ),
 

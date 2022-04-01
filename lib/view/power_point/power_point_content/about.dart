@@ -7,28 +7,99 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:portfolio_web/view/Paint/sifi_dot.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class About extends StatefulWidget {
+  double height = 0;
+  double width = 0;
+  double size = 0;
+  About({required this.height, required this.width, required this.size});
+
 
   @override
   State<About> createState() => _AboutState();
 }
 
 class _AboutState extends State<About> {
+  var time = 0.0;
+  var opacity = Colors.black;
+  bool Animation = true;
+  double widgetWidth = 0;
+
+
+  startAnimation(){
+    Timer(Duration(milliseconds: 10), () => setState(() {
+      opacity = Colors.transparent;
+    }));
+  }
+
+  endAnimation(){
+    Timer(Duration(milliseconds: 500), () => setState(() {
+      Animation = false;
+      widgetWidth = widget.size / 1.3;
+    }));
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    if(Animation) {
+      widgetWidth = widget.width;
+      startAnimation();
+      endAnimation();
+    }
+    return Stack(
+      children: [
+        Stack(
+          children: [
+            Container(
+              width: widgetWidth,
+              child: Center(
+                child: _SubClass(height: widget.height, width: widget.width, size: widget.size,),
+              ),
+            ),
+            Visibility(
+              visible: Animation,
+              child: Center(
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 500),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.elliptical(widget.size / 15, widget.size / 18)),
+                    color: opacity,
+                  ),
+                  width: widget.size / 1.2,
+                  height: widget.size / 1.1,
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+
+
+
+
+
+class _SubClass extends StatefulWidget {
+  double height = 0;
+  double width = 0;
+  double size = 0;
+  _SubClass({required this.height, required this.width, required this.size});
+
+  @override
+  State<_SubClass> createState() => _SubClassState();
+}
+
+class _SubClassState extends State<_SubClass> {
   double height = 0;
   double width = 0;
   double size = 0;
   int time = 0;
   var color = Colors.green;
 
-
-  calculatorSize() {
-    if(width >= height) {
-      size = height;
-    } else {
-      size = width;
-    }
-  }
 
   badgeTemplete(String picture, String text) {
     return Container(
@@ -64,7 +135,7 @@ class _AboutState extends State<About> {
   }
 
   increment(){
-    Timer(Duration(milliseconds: 10), () => setState(() {
+    Timer(Duration(milliseconds: 5), () => setState(() {
       time += 1;
     }));
   }
@@ -88,9 +159,9 @@ class _AboutState extends State<About> {
 
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
-    calculatorSize();
+    height = widget.height;
+    width = widget.width;
+    size = widget.size;
     double containerWidth = size / 1.4;
     increment();
     return Container(
@@ -109,7 +180,7 @@ class _AboutState extends State<About> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, size / 15, 0, 0),
                       child: Transform.rotate(
-                        angle: (time / 20),
+                        angle: (time / 40),
                         child: Container(
                           height: size / 3,
                           width:  size / 3,
@@ -225,7 +296,7 @@ class _AboutState extends State<About> {
                     ),
                   ),
                   Container(
-                    height: height / 2.25,
+                    height: size / 1.25,
                     child: textAnimation("Hi im an talented\napp developer\nfrom copenhagen\ndenmark,im\nextraordinarily\ngood at\n"
                         "solving very\ncomplex problems\nand i always\nfind a solid\nsolution to them,\n"
                         "im surprisingly,\nquick at learning,\ni can almost\ncode something\nwhile im learning\n"
@@ -241,3 +312,4 @@ class _AboutState extends State<About> {
     );
   }
 }
+
